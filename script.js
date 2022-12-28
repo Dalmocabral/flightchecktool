@@ -115,8 +115,8 @@ form.addEventListener('submit', async (event) => {
 
         // Insert the data into the table
         cell1.innerHTML = formattedDate;
-        cell2.innerHTML = aircraftName;
-        cell3.innerHTML = flight.server;
+        cell2.innerHTML = flight.server;
+        cell3.innerHTML = aircraftName;        
         cell4.innerHTML = flight.originAirport;
         cell5.innerHTML = flight.destinationAirport;
         cell6.innerHTML = formattedDayTime;
