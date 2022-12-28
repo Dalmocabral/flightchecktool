@@ -93,6 +93,7 @@ form.addEventListener('submit', async (event) => {
         const cell5 = row.insertCell();
         const cell6 = row.insertCell();
         const cell7 = row.insertCell();
+        const cell8 = row.insertCell();
 
         // Format the date
         const date = new Date(flight.created);
@@ -115,10 +116,11 @@ form.addEventListener('submit', async (event) => {
         // Insert the data into the table
         cell1.innerHTML = formattedDate;
         cell2.innerHTML = aircraftName;
-        cell3.innerHTML = flight.originAirport;
-        cell4.innerHTML = flight.destinationAirport;
-        cell5.innerHTML = formattedDayTime;
-        cell6.innerHTML = formattedNightTime;
-        cell7.innerHTML = totalTime;
+        cell3.innerHTML = flight.server;
+        cell4.innerHTML = flight.originAirport;
+        cell5.innerHTML = flight.destinationAirport;
+        cell6.innerHTML = formattedDayTime;
+        cell7.innerHTML = formattedNightTime;
+        cell8.innerHTML = totalTime;
     });
 });
