@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-Br">
 
 <head>
   <!-- Required meta tags -->
@@ -27,7 +27,7 @@
       <button class="btn btn-primary" type="submit" value="Submit">Verificar</button>
     </div>
   </form>
-
+ 
   <table class="table table-success table-striped" id="myTable">
     <tr>
       <th>Data</th>
@@ -40,6 +40,10 @@
       <th>Total</th>
     </tr>
   </table>
+  <div style="display: flex; align-items: center;">
+    <button id="nextPageButton" class="btn btn-primary" type="button" style="width: 100px;">Mais + </button>
+    <p style="margin-left: 10px;">Página <span id="currentPage"></span> de <span id="totalPages"></span></p>
+  </div>
 </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
