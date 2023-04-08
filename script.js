@@ -2,6 +2,7 @@ let userId = ""
 
 async function getUserStats(username) {
     try {
+        currentPageIndex = 1; // Reset the current page index to 1
         // Prepare request parameters
         const params = { discourseNames: [username] };
         const headers = { 'Content-type': 'application/json', 'Accept': 'text/plain' };
@@ -88,6 +89,7 @@ nextPageButton.addEventListener('click', async () => {
       totalPagesElement.textContent = userFlights.totalPages
     }
 
+    
     currentPageElement.textContent = currentPageIndex;
 
     flights.sort((a, b) => new Date(b.created) - new Date(a.created));
@@ -96,12 +98,14 @@ nextPageButton.addEventListener('click', async () => {
         const row = table.insertRow();
         const cell1 = row.insertCell();
         const cell2 = row.insertCell();
+        const cell9 = row.insertCell();
         const cell3 = row.insertCell();
         const cell4 = row.insertCell();
         const cell5 = row.insertCell();
         const cell6 = row.insertCell();
         const cell7 = row.insertCell();
         const cell8 = row.insertCell();
+        
 
         // Format the date
         const date = new Date(flight.created);
@@ -124,12 +128,14 @@ nextPageButton.addEventListener('click', async () => {
         // Insert the data into the table
         cell1.innerHTML = formattedDate;
         cell2.innerHTML = flight.server;
+        cell9.innerHTML = flight.callsign
         cell3.innerHTML = aircraftName;        
         cell4.innerHTML = flight.originAirport;
         cell5.innerHTML = flight.destinationAirport;
         cell6.innerHTML = formattedDayTime;
         cell7.innerHTML = formattedNightTime;
         cell8.innerHTML = totalTime;
+        
     });
 });
 
@@ -155,12 +161,14 @@ form.addEventListener('submit', async (event) => {
         const row = table.insertRow();
         const cell1 = row.insertCell();
         const cell2 = row.insertCell();
+        const cell9 = row.insertCell();
         const cell3 = row.insertCell();
         const cell4 = row.insertCell();
         const cell5 = row.insertCell();
         const cell6 = row.insertCell();
         const cell7 = row.insertCell();
         const cell8 = row.insertCell();
+        
 
         // Format the date
         const date = new Date(flight.created);
@@ -183,11 +191,13 @@ form.addEventListener('submit', async (event) => {
         // Insert the data into the table
         cell1.innerHTML = formattedDate;
         cell2.innerHTML = flight.server;
+        cell9.innerHTML = flight.callsign
         cell3.innerHTML = aircraftName;        
         cell4.innerHTML = flight.originAirport;
         cell5.innerHTML = flight.destinationAirport;
         cell6.innerHTML = formattedDayTime;
         cell7.innerHTML = formattedNightTime;
         cell8.innerHTML = totalTime;
+        
     });
 });
