@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pesquisa de Liveries</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Tools IFAB</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Pesquisa Logbook</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="livery.html">Pesquisa Livery</a>
+              </li>              
+            </ul>
+          </div>
+        </div>
+      </nav>
+<div class="container">
+    <h1 class="ferr">Ferramenta de Pesquisa ID livery</h1>
+        <div class="col-auto input-group">
+  <input type="text" id="searchInput" placeholder="Digite o termo de pesquisa">
+  <button class="btn btn-primary" onclick="pesquisar()">Pesquisar</button>
+</div>
+
+  <table class="table table-success table-striped" id="resultsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Aircraft Name</th>
+        <th>Livery Name</th>
+      </tr>
+    </thead>
+    <tbody id="resultsBody"></tbody>
+  </table>
+</div>
+  <script>
+    function pesquisar() {
+      var input = document.getElementById("searchInput").value;
+      var url = "https://api.infiniteflight.com/public/v2/aircraft/liveries?apikey=nvo8c790hfa9q3duho2jhgd2jf8tgwqw";
+      
+      // Adicione o termo de pesquisa à URL
+      if (input) {
+        url += "&query=" + encodeURIComponent(input);
+      }
+      
+      // Realize a solicitação HTTP GET
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.result && response.result.length > 0) {
+              var filteredResults = filtrarPorLiveryName(response.result, input);
+              exibirResultados(filteredResults);
+            } else {
+              exibirMensagem("Nenhum resultado encontrado.");
+            }
+          } else {
+            exibirMensagem("Erro ao buscar os resultados da API.");
+          }
+        }
+      };
+      xhr.send();
+    }
+
+    function filtrarPorLiveryName(resultados, termoPesquisa) {
+      return resultados.filter(function(livery) {
+        return livery.liveryName.toLowerCase().includes(termoPesquisa.toLowerCase());
+      });
+    }
+
+    function exibirResultados(resultados) {
+      var resultsBody = document.getElementById("resultsBody");
+      resultsBody.innerHTML = ""; // Limpa os resultados anteriores
+
+      // Exibe os resultados da pesquisa na tabela
+      for (var i = 0; i < resultados.length; i++) {
+        var livery = resultados[i];
+        var row = resultsBody.insertRow();
+        var idCell = row.insertCell();
+        var aircraftNameCell = row.insertCell();
+        var liveryNameCell = row.insertCell();
+        idCell.textContent = livery.id;
+        aircraftNameCell.textContent = livery.aircraftName;
+        liveryNameCell.textContent = livery.liveryName;
+      }
+    }
+
+    function exibirMensagem(mensagem) {
+      var resultsBody = document.getElementById("resultsBody");
+      resultsBody.innerHTML = "<tr><td colspan='3'>" + mensagem + "</td></tr>";
+    }
+  </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
